@@ -8,32 +8,38 @@ using System.Data;
 using System.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using project_api.Models;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace project_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DepartmentController : ControllerBase
+    public class EmployeeController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        public DepartmentController(IConfiguration configuration)
+        private readonly IWebHostEnvironment _env;
+        public EmployeeController(IConfiguration configuration, IWebHostEnvironment env)
         {
             _configuration = configuration;
+            _env = env;
         }
 
         [HttpGet]
         public JsonResult Get()
         {
             string query = @"
-            select DepartmentID, DepartmentName from dbo.Department";
+            select EmployeeId, EmployeeName, Department,
+            convert(varchar(10), DateOfJoining, 120) as DateOfJoining, PhotoFileName
+            from dbo.Employee";
 
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("EmployeeAppCon");
             SqlDataReader myReader;
-            using(SqlConnection myCon = new SqlConnection(sqlDataSource))
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
             {
                 myCon.Open();
-                using(SqlCommand myCommand = new SqlCommand(query, myCon))
+                using (SqlCommand myCommand = new SqlCommand(query, myCon))
                 {
                     myReader = myCommand.ExecuteReader();
                     table.Load(myReader);
@@ -46,11 +52,12 @@ namespace project_api.Controllers
         }
 
         [HttpPost]
-        public JsonResult Post(Department dep)
+        public JsonResult Post(Employee emp)
         {
             string query = @"
-            insert into dbo.Department
-             values (@DepartmentName)
+            insert into dbo.Employee
+            (EmployeeName, Department, DateOfJoining, PhotoFileName)
+             values (@EmployeeName, @Department, @DateOfJoining, @PhotoFileName)
              ";
 
             DataTable table = new DataTable();
@@ -61,7 +68,10 @@ namespace project_api.Controllers
                 myCon.Open();
                 using (SqlCommand myCommand = new SqlCommand(query, myCon))
                 {
-                    myCommand.Parameters.AddWithValue("@DepartmentName", dep.DepartmentName);
+                    myCommand.Parameters.AddWithValue("@EmployeeName", emp.EmployeeName);
+                    myCommand.Parameters.AddWithValue("@Department", emp.Department);
+                    myCommand.Parameters.AddWithValue("@DateOfJoining", emp.DateOfJoining);
+                    myCommand.Parameters.AddWithValue("@PhotoFileName", emp.PhotoFileName);
                     myReader = myCommand.ExecuteReader();
                     table.Load(myReader);
                     myReader.Close();
@@ -73,12 +83,14 @@ namespace project_api.Controllers
         }
 
         [HttpPut]
-        public JsonResult Put(Department dep)
+        public JsonResult Put(Employee emp)
         {
             string query = @"
-                update dbo.Department
-                set DepartmentName= @DepartmentName
-                where DepartmentID= @DepartmentId
+            update dbo.Employee
+            set EmployeeName= @EmployeeName,
+            Department= @Department,
+            DateOfJoining= @DateOfJoining,
+            PhotofileName= @PhotoFileName
              ";
 
             DataTable table = new DataTable();
@@ -89,8 +101,11 @@ namespace project_api.Controllers
                 myCon.Open();
                 using (SqlCommand myCommand = new SqlCommand(query, myCon))
                 {
-                    myCommand.Parameters.AddWithValue("@DepartmentId", dep.DepartmentId);
-                    myCommand.Parameters.AddWithValue("@DepartmentName", dep.DepartmentName);
+                    myCommand.Parameters.AddWithValue("@EmployeeId", emp.EmployeeId);
+                    myCommand.Parameters.AddWithValue("@EmployeeName", emp.EmployeeName);
+                    myCommand.Parameters.AddWithValue("@Department", emp.Department);
+                    myCommand.Parameters.AddWithValue("@DateOfJoining", emp.DateOfJoining);
+                    myCommand.Parameters.AddWithValue("@PhotoFileName", emp.PhotoFileName);
                     myReader = myCommand.ExecuteReader();
                     table.Load(myReader);
                     myReader.Close();
@@ -98,7 +113,7 @@ namespace project_api.Controllers
                 }
             }
 
-            return new JsonResult("Updated Succesfully");
+            return new JsonResult("Added Succesfully");
         }
 
 
@@ -106,8 +121,8 @@ namespace project_api.Controllers
         public JsonResult Delete(int id)
         {
             string query = @"
-                delete from dbo.Department
-                where DepartmentId= @DepartmentId
+                delete from dbo.Employee
+                where EmployeeId= @EmployeeId
              ";
 
             DataTable table = new DataTable();
@@ -118,7 +133,7 @@ namespace project_api.Controllers
                 myCon.Open();
                 using (SqlCommand myCommand = new SqlCommand(query, myCon))
                 {
-                    myCommand.Parameters.AddWithValue("@DepartmentId", id);
+                    myCommand.Parameters.AddWithValue("@EmployeeId", id);
                     myReader = myCommand.ExecuteReader();
                     table.Load(myReader);
                     myReader.Close();
@@ -127,6 +142,30 @@ namespace project_api.Controllers
             }
 
             return new JsonResult("Deleted Succesfully");
+        }
+
+        [Route("SaveFile")]
+        [HttpPost]
+        public JsonResult SaveFile()
+        {
+            try
+            {
+                var httpRequest = Request.Form;
+                var postedFile = httpRequest.Files[0];
+                string filename = postedFile.FileName;
+                var physicalPath = _env.ContentRootPath + "/Photos/" + filename;
+
+                using(var stream= new FileStream(physicalPath, FileMode.Create))
+                {
+                    postedFile.CopyTo(stream);
+                }
+
+                return new JsonResult(filename);
+            }
+            catch(Exception)
+            {
+                return new JsonResult("anonymous.png");
+            }
         }
     }
 }

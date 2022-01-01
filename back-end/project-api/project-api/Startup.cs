@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Serialization;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace project_api
 {
@@ -57,6 +59,14 @@ namespace project_api
             {
                 endpoints.MapControllers();
             });
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "Photos")),
+                RequestPath = "/Photos"
+            });
+
         }
     }
 }

@@ -24,3 +24,9 @@ F:\SABBIR\DOT_NET\project-api\back-end\project-api\project-api\obj\Debug\netcore
 F:\SABBIR\DOT_NET\project-api\back-end\project-api\project-api\obj\Debug\netcoreapp3.1\project-api.dll
 F:\SABBIR\DOT_NET\project-api\back-end\project-api\project-api\obj\Debug\netcoreapp3.1\project-api.pdb
 F:\SABBIR\DOT_NET\project-api\back-end\project-api\project-api\obj\Debug\netcoreapp3.1\project-api.genruntimeconfig.cache
+F:\SABBIR\DOT_NET\project-api\back-end\project-api\project-api\bin\Debug\netcoreapp3.1\System.Data.SqlClient.dll
+F:\SABBIR\DOT_NET\project-api\back-end\project-api\project-api\bin\Debug\netcoreapp3.1\runtimes\win-arm64\native\sni.dll
+F:\SABBIR\DOT_NET\project-api\back-end\project-api\project-api\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\sni.dll
+F:\SABBIR\DOT_NET\project-api\back-end\project-api\project-api\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\sni.dll
+F:\SABBIR\DOT_NET\project-api\back-end\project-api\project-api\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+F:\SABBIR\DOT_NET\project-api\back-end\project-api\project-api\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
