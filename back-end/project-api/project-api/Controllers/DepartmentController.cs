@@ -25,7 +25,7 @@ namespace project_api.Controllers
         public JsonResult Get()
         {
             string query = @"
-            select DepartmentID, DepartmentName from dbo.Department";
+            select DepartmentID as DepartmentId, DepartmentName from dbo.Department";
 
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("EmployeeAppCon");

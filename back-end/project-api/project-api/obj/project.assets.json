@@ -665,19 +665,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\IT\\.nuget\\packages\\": {}
+    "C:\\Users\\sabbi\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\SABBIR\\DOT_NET\\project-api\\back-end\\project-api\\project-api\\project-api.csproj",
+      "projectUniqueName": "C:\\Users\\sabbi\\Documents\\GitHub\\project-api\\back-end\\project-api\\project-api\\project-api.csproj",
       "projectName": "project-api",
-      "projectPath": "F:\\SABBIR\\DOT_NET\\project-api\\back-end\\project-api\\project-api\\project-api.csproj",
-      "packagesPath": "C:\\Users\\IT\\.nuget\\packages\\",
-      "outputPath": "F:\\SABBIR\\DOT_NET\\project-api\\back-end\\project-api\\project-api\\obj\\",
+      "projectPath": "C:\\Users\\sabbi\\Documents\\GitHub\\project-api\\back-end\\project-api\\project-api\\project-api.csproj",
+      "packagesPath": "C:\\Users\\sabbi\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\sabbi\\Documents\\GitHub\\project-api\\back-end\\project-api\\project-api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\IT\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\sabbi\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
